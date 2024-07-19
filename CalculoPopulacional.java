@@ -14,6 +14,7 @@ public class CalculoPopulacional {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Quantas pessoas desejas entrevistar?");
         int quantidadePessoasEntrevistadas = scanner.nextInt();
+        scanner.nextLine();
         boolean runProgram = true;
         float mediaSalarios = 0;
         float mediaFilhos = 0;
@@ -26,11 +27,26 @@ public class CalculoPopulacional {
 
         while (runProgram) {
             for (int i = 0; i < quantidadePessoasEntrevistadas; i++) {
-                System.out.println("Digite o " + (i+1) + " salario");
-                float salario = scanner.nextFloat();
+                boolean salarioValidado = false;
 
-                salarios[i] = salario;
-                scanner.nextLine();
+                while (!salarioValidado) {
+                    System.out.println("Digite o " + (i+1) + "º salario");
+                    String entrada = scanner.nextLine();
+                        try {
+                            float salario = Float.parseFloat(entrada);
+                            boolean salarioNegativo = salario < 0;
+
+                            if (salarioNegativo) {
+                                System.out.println("Por favor, digite um salário válido.");
+                            } else {
+                                salarios[i] = salario;
+                                salarioValidado = true;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Por favor, digite um salário válido.");
+                        }
+
+                }
 
                 int quantidadeFilhosPorPessoa = 0;
                 boolean numeroValidado = false;
